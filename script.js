@@ -11,7 +11,7 @@ $(document).ready( function() {
             <thead id="table-head">
                 <tr>
                     <th scope="col">Post ID</th>
-                    <th scope="col">ID</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Actions</th>
@@ -20,7 +20,6 @@ $(document).ready( function() {
             <tbody id="tableBody"></tbody>
         `);
     }
-
 
     function renderTableBody(data) {
         data.forEach(element => {
@@ -36,6 +35,20 @@ $(document).ready( function() {
         });
     }
 
+    function addRow(data, startRow, endRow) {
+        for(let i=startRow; i<endRow; i++) {
+            $('#tableBody').append(`
+                <tr>
+                    <td>${data[i].postId}</td>
+                    <td>${data[i].id}</td>
+                    <td class="api-name">${data[i].name}</td>
+                    <td>${data[i].email}</td>
+                    <td> <button type="button" class="btn btn-secondary" id="${data[i].id}">View body</button> </td>
+                </tr>
+            `);
+        }
+    }
+
     function bodyViewButton(data) {
         data.forEach(element => {
             $(`#${element.id}`).on('click',function() {
@@ -44,6 +57,24 @@ $(document).ready( function() {
         });
     }
 
+    function paginationContent(val, data) {
+        let rowPerPage = 10;
+        let totalPage = Math.floor(data.length / rowPerPage);
+
+        let currentPage = val;
+        let firstPageRow = currentPage * 10;
+        let LastPageRow = firstPageRow + 10;
+
+        addRow(data, firstPageRow, LastPageRow);
+        bodyViewButton(data);
+
+        $('.next-btn').click(function() {
+            if(currentPage < 50) {
+                currentPage = currentPage + 1;
+                paginationContent(currentPage, data);
+            }
+        })
+    }
 
     $.ajax({
         url: data_url,
@@ -52,12 +83,12 @@ $(document).ready( function() {
         success: function(data) {
             
             renderTableHead();
-            renderTableBody(data);
+            // renderTableBody(data);
 
             // To see body-content
-            bodyViewButton(data);
+            // bodyViewButton(data);
 
-            paginationContent(1, data);
+            paginationContent(0, data);
    
         },
 

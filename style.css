@@ -2,6 +2,19 @@ form {
     width: 50vw;
 }
 
+.p-content {
+    width: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1vh;
+}
+
 #dataTable {
-    margin-top: 10vh;
+    margin-top: 1vh;
 }
