@@ -36,6 +36,7 @@ $(document).ready( function() {
     }
 
     function addRow(data, startRow, endRow) {
+        $('#tableBody').html('');
         for(let i=startRow; i<endRow; i++) {
             $('#tableBody').append(`
                 <tr>
@@ -69,11 +70,34 @@ $(document).ready( function() {
         bodyViewButton(data);
 
         $('.next-btn').click(function() {
-            if(currentPage < 50) {
-                currentPage = currentPage + 1;
+            if(currentPage < totalPage) {
+                currentPage += 1;
                 paginationContent(currentPage, data);
             }
         })
+
+        $('.prev-btn').click(function() {
+            if(currentPage > 0) {
+                currentPage -= 1;
+                paginationContent(currentPage, data);
+            }
+        })
+
+        $('.plusFive').click(function() {
+            if(currentPage < totalPage-5) {
+                currentPage += 5;
+                paginationContent(currentPage, data);
+            }
+        })
+
+        $('.minusFive').click(function() {
+            if(currentPage >= 5) {
+                currentPage -= 5;
+                paginationContent(currentPage, data);
+            }
+        })
+
+        $('.currPageSpan').text(`${currentPage + 1}`)
     }
 
     $.ajax({
