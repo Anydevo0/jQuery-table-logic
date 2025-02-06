@@ -97,7 +97,7 @@ $(document).ready( function() {
             }
         })
 
-        $('.currPageSpan').text(`${currentPage + 1}`)
+        $('.currPageSpan').text(`${currentPage + 1}`);
     }
 
     $.ajax({
